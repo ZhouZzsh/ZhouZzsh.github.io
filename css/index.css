@@ -3616,3 +3616,19 @@ pre .coffeescript .title {
   opacity: 1;
   transform: translateY(0) scale(1);
 }
+:root {
+  --primary: #dd1010;
+  --primary-70: rgba(221, 16, 16, 0.7);
+  --primary-50: rgba(221, 16, 16, 0.5);
+  --primary-30: rgba(221, 16, 16, 0.3);
+  --primary-weak: #cf1616;
+  --primary-weak-50: rgba(207, 22, 22, 0.5);
+}
+:root.dark {
+  --primary: #a4ce60;
+  --primary-70: rgba(164, 206, 96, 0.7);
+  --primary-50: rgba(164, 206, 96, 0.5);
+  --primary-30: rgba(164, 206, 96, 0.3);
+  --primary-weak: #82df7a;
+  --primary-weak-50: rgba(130, 223, 122, 0.5);
+}
