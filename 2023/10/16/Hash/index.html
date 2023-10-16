@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="上文《位运算知识及相关题目》中的题目包含了哈希思想的题解,对于初学算法及数据结构的我来说不是特别理解,但很多题目中又要运用到哈希表的思想。故写此篇来记录哈希表的基础知识和相关的题目集合 HashMap定义:HashMap 是一个散列表，它存储的内容是键值(key-value)映射。HashMap 的 key 与 value 类型可以相同也可以不同，根据定义，不受限制。 定义十分晦涩难懂,反正我干看">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HashMap及其相关思想题目集合">
+<meta property="og:url" content="http://example.com/2023/10/16/Hash/index.html">
+<meta property="og:site_name" content="ZhouZz&#39;s bolg">
+<meta property="og:description" content="上文《位运算知识及相关题目》中的题目包含了哈希思想的题解,对于初学算法及数据结构的我来说不是特别理解,但很多题目中又要运用到哈希表的思想。故写此篇来记录哈希表的基础知识和相关的题目集合 HashMap定义:HashMap 是一个散列表，它存储的内容是键值(key-value)映射。HashMap 的 key 与 value 类型可以相同也可以不同，根据定义，不受限制。 定义十分晦涩难懂,反正我干看">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-10-16T10:11:32.011Z">
+<meta property="article:modified_time" content="2023-10-16T10:22:36.809Z">
+<meta property="article:author" content="ZhouZz">
+<meta name="twitter:card" content="summary">
+
+
+<title >HashMap及其相关思想题目集合</title>
+
+<!-- Favicon -->
+
+    <link href='/123.svg?v=2.1.3' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/123.svg?v=2.1.3' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+    <link href='/apple-touch-icon.png?v=2.1.3' rel='apple-touch-icon' sizes='180x180' ></link>
+
+
+    <link href='/site.webmanifest' rel='manifest' ></link>
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://npm.elemecdn.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"ZhouZz","root":"/","typed_text":["We are all in the gutter,but some of us are looking at the stars."],"theme_version":"2.1.3","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"123.svg","icon16":"123.svg","icon32":"123.svg","appleTouchIcon":"apple-touch-icon.png","webmanifest":"/site.webmanifest","visibilitychange":false,"hidden":"123.svg","showText":"ZhouZz's blog","hideText":"ZhouZz's blog"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":true}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2023-10-16 18:22:36"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.1.3" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+ 
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/123.svg">
+    
+    
+        <div class="trm-logo-text">
+            ZhouZz&#39;s<span>blog</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    归档
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/category/" target="">
+                    分类
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/category/" target="">
+                            子分类1
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            HashMap及其相关思想题目集合
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2023
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="http://mms0.baidu.com/it/u=1349583414,1842280208&fm=253&app=138&f=JPEG?w=500&h=500">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        ZhouZz
+    </h5>
+    
+        <div class="trm-label">
+            
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/ZhouZzsh" title="github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://qm.qq.com/q/J6gxYjbXEe" title="QQ" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-qq"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                Coordinate:
+            </div>
+            <div class="trm-label trm-label-light">
+                广州
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                Age:
+            </div>
+            <div class="trm-label trm-label-light">
+                19
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                Sex:
+            </div>
+            <div class="trm-label trm-label-light">
+                男
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:1619382695@qq.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            10/16
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            18:11
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            ZhouZz
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <p>上文《位运算知识及相关题目》中的题目包含了哈希思想的题解,对于初学算法及数据结构的我来说不是特别理解,但很多题目中又要运用到哈希表的思想。<br>故写此篇来记录哈希表的基础知识和相关的题目集合</p>
+<h2 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h2><p>定义:HashMap 是一个散列表，它存储的内容是键值(key-value)映射。<br>HashMap 的 key 与 value 类型可以相同也可以不同，根据定义，不受限制。</p>
+<p>定义十分晦涩难懂,反正我干看是看不懂的。接下来用一个例子来解释一下HashMap这玩意主要是干了个什么事。</p>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子:"></a>例子:</h4><p><code> 已知数组a,其中保存了n个整数,从数组a中，查找整数key，确定key是否在数组a中。</code><br>对与刚开始的我们来说一般思想都是用一个循环,一个个遍历看是否key == a[i]<br>这种方法虽然简单直接,但是效率很低,如果a中有大量元素,这种方法的效率将无法容忍!</p>
+<p>为了解决这种问题,因此有了HashMap这种思想。</p>
+<ol>
+<li>我们首先定义一个数组并全部初始化为0: Hash[100] = {0}</li>
+<li>然后使用数组下标记录元素是否出现过,出现了多少次<br><code>例如: 5出现1次,那么Hash[5]=1。 9出现3次,那么Hash[9]=3</code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//函数实现(CLanguage)</span><br><span class="line"><span class="comment">#include &lt;stdio.h&gt;</span></span><br><span class="line">//哈希表的创建函数</span><br><span class="line">void create <span class="built_in">hash</span>(int a[], int n,int table[])&#123;</span><br><span class="line">    //使用i，遍历数组a中的全部n个元素</span><br><span class="line">    <span class="keyword">for</span> (int i = 0; i &lt; n; i++)&#123;</span><br><span class="line">        //通过table[a[i]]++</span><br><span class="line">        //利用table数组的下标</span><br><span class="line">        //记录数字a[i]出现的次数</span><br><span class="line">        table[a[i]]++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()(</span><br><span class="line">int a[] = (7, 17 , 5 , 8 , 9 ,20 , 3 , 2 , 5&#125;;</span><br><span class="line">//在使用哈希查找之前，需要先创建哈希表</span><br><span class="line">//设置一个长度是100的数组table，初始化其中的元素为0</span><br><span class="line">//作为哈希表的表体</span><br><span class="line">int table[100] = &#123;0&#125;;</span><br><span class="line">//使用函数，create_hash，创建哈希表</span><br><span class="line">create <span class="built_in">hash</span>(a,10，table);</span><br></pre></td></tr></table></figure>
+通过以上方法,我们就达成了HashMap的映射作用,也是HashMap中最基本的思想。</li>
+</ol>
+<h2 id="HashMap的创建"><a href="#HashMap的创建" class="headerlink" title="HashMap的创建"></a>HashMap的创建</h2><p>在Java中,HashMap 类位于 java.util 包中，使用前需要引入它，语法格式如下:<br><code>import java.util.HashMap; // 引入 HashMap 类</code><br>以下实例我们创建一个 HashMap 对象 Sites， 整型（Integer）的 key 和字符串（String）类型的 value：<br><code>HashMap&lt;Integer, String&gt; Sites = new HashMap&lt;Integer, String&gt;();</code><br>HashMap 中的元素实际上是对象，一些常见的基本类型可以使用它的包装类。<br>基本类型对应的包装类表如下：</p>
+<table>
+<thead>
+<tr>
+<th>基本类型</th>
+<th>引用类型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>boolean</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>byte</td>
+<td>Byte</td>
+</tr>
+<tr>
+<td>int</td>
+<td>Integer</td>
+</tr>
+<tr>
+<td>long</td>
+<td>Long</td>
+</tr>
+<tr>
+<td>float</td>
+<td>Float</td>
+</tr>
+<tr>
+<td>double</td>
+<td>Double</td>
+</tr>
+<tr>
+<td>char</td>
+<td>Character</td>
+</tr>
+</tbody></table>
+<h2 id="Java-HashMap方法"><a href="#Java-HashMap方法" class="headerlink" title="Java HashMap方法"></a>Java HashMap方法</h2><p>Java HashMap 常用方法列表如下：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>clear()</td>
+<td>删除 hashMap 中的所有键/值对</td>
+</tr>
+<tr>
+<td>clone()</td>
+<td>复制一份 hashMap</td>
+</tr>
+<tr>
+<td>isEmpty()</td>
+<td>判断 hashMap 是否为空</td>
+</tr>
+<tr>
+<td>size()</td>
+<td>计算 hashMap 中键/值对的数量</td>
+</tr>
+<tr>
+<td>put()</td>
+<td>将键/值对添加到 hashMap 中</td>
+</tr>
+<tr>
+<td>putAll()</td>
+<td>将所有键/值对添加到 hashMap 中</td>
+</tr>
+<tr>
+<td>putIfAbsent()</td>
+<td>如果 hashMap 中不存在指定的键，则将指定的键/值对插入到 hashMap 中。</td>
+</tr>
+<tr>
+<td>remove()</td>
+<td>删除 hashMap 中指定键 key 的映射关系</td>
+</tr>
+<tr>
+<td>containsKey()</td>
+<td>检查 hashMap 中是否存在指定的 key 对应的映射关系。</td>
+</tr>
+<tr>
+<td>containsValue()</td>
+<td>检查 hashMap 中是否存在指定的 value 对应的映射关系。</td>
+</tr>
+<tr>
+<td>replace()</td>
+<td>替换 hashMap 中是指定的 key 对应的 value。</td>
+</tr>
+<tr>
+<td>replaceAll()</td>
+<td>将 hashMap 中的所有映射关系替换成给定的函数所执行的结果。</td>
+</tr>
+<tr>
+<td>get()</td>
+<td>获取指定 key 对应对 value</td>
+</tr>
+<tr>
+<td>getOrDefault()</td>
+<td>获取指定 key 对应对 value，如果找不到 key ，则返回设置的默认值</td>
+</tr>
+<tr>
+<td>forEach()</td>
+<td>对 hashMap 中的每个映射执行指定的操作。</td>
+</tr>
+<tr>
+<td>entrySet()</td>
+<td>返回 hashMap 中所有映射项的集合集合视图。</td>
+</tr>
+<tr>
+<td>keySet()</td>
+<td>返回 hashMap 中所有 key 组成的集合视图。</td>
+</tr>
+<tr>
+<td>values()</td>
+<td>返回 hashMap 中存在的所有 value 值。</td>
+</tr>
+<tr>
+<td>merge()</td>
+<td>添加键值对到 hashMap 中</td>
+</tr>
+<tr>
+<td>compute()</td>
+<td>对 hashMap 中指定 key 的值进行重新计算</td>
+</tr>
+<tr>
+<td>computeIfAbsent()</td>
+<td>对 hashMap 中指定 key 的值进行重新计算，如果不存在这个 key，则添加到 hasMap 中</td>
+</tr>
+<tr>
+<td>computeIfPresent()</td>
+<td>对 hashMap 中指定 key 的值进行重新计算，前提是该 key 存在于 hashMap 中。</td>
+</tr>
+</tbody></table>
+<p>相关方法的详细用法:<a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-hashmap.html">https://www.runoob.com/java/java-hashmap.html</a></p>
+<h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法:"></a>常用方法:</h3><h4 id="添加元素"><a href="#添加元素" class="headerlink" title="添加元素"></a>添加元素</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 引入 HashMap 类      </span><br><span class="line">import java.util.HashMap;</span><br><span class="line"></span><br><span class="line">public class RunoobTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 创建 HashMap 对象 Sites</span><br><span class="line">        HashMap&lt;Integer, String&gt; Sites = new HashMap&lt;Integer, String&gt;();</span><br><span class="line">        // 添加键值对</span><br><span class="line">        Sites.put(1, <span class="string">&quot;Google&quot;</span>);</span><br><span class="line">        Sites.put(2, <span class="string">&quot;Runoob&quot;</span>);</span><br><span class="line">        Sites.put(3, <span class="string">&quot;Taobao&quot;</span>);</span><br><span class="line">        Sites.put(4, <span class="string">&quot;Zhihu&quot;</span>);</span><br><span class="line">        System.out.println(Sites);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行以上代码，输出结果如下：<br><code>&#123;1=Google, 2=Runoob, 3=Taobao, 4=Zhihu&#125;</code><br>以下实例创建一个字符串（String）类型的 key 和字符串（String）类型的 value：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 引入 HashMap 类      </span><br><span class="line">import java.util.HashMap;</span><br><span class="line"></span><br><span class="line">public class RunoobTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 创建 HashMap 对象 Sites</span><br><span class="line">        HashMap&lt;String, String&gt; Sites = new HashMap&lt;String, String&gt;();</span><br><span class="line">        // 添加键值对</span><br><span class="line">        Sites.put(<span class="string">&quot;one&quot;</span>, <span class="string">&quot;Google&quot;</span>);</span><br><span class="line">        Sites.put(<span class="string">&quot;two&quot;</span>, <span class="string">&quot;Runoob&quot;</span>);</span><br><span class="line">        Sites.put(<span class="string">&quot;three&quot;</span>, <span class="string">&quot;Taobao&quot;</span>);</span><br><span class="line">        Sites.put(<span class="string">&quot;four&quot;</span>, <span class="string">&quot;Zhihu&quot;</span>);</span><br><span class="line">        System.out.println(Sites);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行以上代码，输出结果如下：<br><code>&#123;four=Zhihu, one=Google, two=Runoob, three=Taobao&#125; </code></p>
+<h4 id="访问元素"><a href="#访问元素" class="headerlink" title="访问元素"></a>访问元素</h4><p>我们可以使用 get(key) 方法来获取 key 对应的 value:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 引入 HashMap 类      </span><br><span class="line">import java.util.HashMap;</span><br><span class="line"></span><br><span class="line">public class RunoobTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 创建 HashMap 对象 Sites</span><br><span class="line">        HashMap&lt;Integer, String&gt; Sites = new HashMap&lt;Integer, String&gt;();</span><br><span class="line">        // 添加键值对</span><br><span class="line">        Sites.put(1, <span class="string">&quot;Google&quot;</span>);</span><br><span class="line">        Sites.put(2, <span class="string">&quot;Runoob&quot;</span>);</span><br><span class="line">        Sites.put(3, <span class="string">&quot;Taobao&quot;</span>);</span><br><span class="line">        Sites.put(4, <span class="string">&quot;Zhihu&quot;</span>);</span><br><span class="line">        System.out.println(Sites.get(3));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行以上代码，输出结果如下：<br><code> Taobao</code></p>
+<h4 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h4><p>我们可以使用 remove(key) 方法来删除 key 对应的键值对(key-value):</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 引入 HashMap 类      </span><br><span class="line">import java.util.HashMap;</span><br><span class="line"></span><br><span class="line">public class RunoobTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 创建 HashMap 对象 Sites</span><br><span class="line">        HashMap&lt;Integer, String&gt; Sites = new HashMap&lt;Integer, String&gt;();</span><br><span class="line">        // 添加键值对</span><br><span class="line">        Sites.put(1, <span class="string">&quot;Google&quot;</span>);</span><br><span class="line">        Sites.put(2, <span class="string">&quot;Runoob&quot;</span>);</span><br><span class="line">        Sites.put(3, <span class="string">&quot;Taobao&quot;</span>);</span><br><span class="line">        Sites.put(4, <span class="string">&quot;Zhihu&quot;</span>);</span><br><span class="line">        Sites.remove(4);</span><br><span class="line">        System.out.println(Sites);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行以上代码，输出结果如下：<br><code>&#123;1=Google, 2=Runoob, 3=Taobao&#125; </code></p>
+<p>删除所有键值对(key-value)可以使用 clear 方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// 引入 HashMap 类      </span><br><span class="line">import java.util.HashMap;</span><br><span class="line"></span><br><span class="line">public class RunoobTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 创建 HashMap 对象 Sites</span><br><span class="line">        HashMap&lt;Integer, String&gt; Sites = new HashMap&lt;Integer, String&gt;();</span><br><span class="line">        // 添加键值对</span><br><span class="line">        Sites.put(1, <span class="string">&quot;Google&quot;</span>);</span><br><span class="line">        Sites.put(2, <span class="string">&quot;Runoob&quot;</span>);</span><br><span class="line">        Sites.put(3, <span class="string">&quot;Taobao&quot;</span>);</span><br><span class="line">        Sites.put(4, <span class="string">&quot;Zhihu&quot;</span>);</span><br><span class="line">        Sites.clear();</span><br><span class="line">        System.out.println(Sites);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行以上代码，输出结果如下：<br><code>&#123;&#125;</code></p>
+<h4 id="计算大小"><a href="#计算大小" class="headerlink" title="计算大小"></a>计算大小</h4><p>如果要计算 HashMap 中的元素数量可以使用 size() 方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 引入 HashMap 类      </span><br><span class="line">import java.util.HashMap;</span><br><span class="line"></span><br><span class="line">public class RunoobTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 创建 HashMap 对象 Sites</span><br><span class="line">        HashMap&lt;Integer, String&gt; Sites = new HashMap&lt;Integer, String&gt;();</span><br><span class="line">        // 添加键值对</span><br><span class="line">        Sites.put(1, <span class="string">&quot;Google&quot;</span>);</span><br><span class="line">        Sites.put(2, <span class="string">&quot;Runoob&quot;</span>);</span><br><span class="line">        Sites.put(3, <span class="string">&quot;Taobao&quot;</span>);</span><br><span class="line">        Sites.put(4, <span class="string">&quot;Zhihu&quot;</span>);</span><br><span class="line">        System.out.println(Sites.size());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行以上代码，输出结果如下：<br><code>4</code></p>
+<h4 id="迭代-HashMap"><a href="#迭代-HashMap" class="headerlink" title="迭代 HashMap"></a>迭代 HashMap</h4><p>可以使用 for-each 来迭代 HashMap 中的元素。<br>如果你只想获取 key，可以使用 keySet() 方法，然后可以通过 get(key) 获取对应的 value，如果你只想获取 value，可以使用 values() 方法。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// 引入 HashMap 类      </span><br><span class="line">import java.util.HashMap;</span><br><span class="line"></span><br><span class="line">public class RunoobTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 创建 HashMap 对象 Sites</span><br><span class="line">        HashMap&lt;Integer, String&gt; Sites = new HashMap&lt;Integer, String&gt;();</span><br><span class="line">        // 添加键值对</span><br><span class="line">        Sites.put(1, <span class="string">&quot;Google&quot;</span>);</span><br><span class="line">        Sites.put(2, <span class="string">&quot;Runoob&quot;</span>);</span><br><span class="line">        Sites.put(3, <span class="string">&quot;Taobao&quot;</span>);</span><br><span class="line">        Sites.put(4, <span class="string">&quot;Zhihu&quot;</span>);</span><br><span class="line">        // 输出 key 和 value</span><br><span class="line">        <span class="keyword">for</span> (Integer i : Sites.keySet()) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;key: &quot;</span> + i + <span class="string">&quot; value: &quot;</span> + Sites.get(i));</span><br><span class="line">        &#125;</span><br><span class="line">        // 返回所有 value 值</span><br><span class="line">        <span class="keyword">for</span>(String value: Sites.values()) &#123;</span><br><span class="line">          // 输出每一个value</span><br><span class="line">          System.out.print(value + <span class="string">&quot;, &quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行以上代码，输出结果如下：<br><code>key: 1 value: Google</code><br><code>key: 2 value: Runoob</code><br><code>key: 3 value: Taobao</code><br><code>key: 4 value: Zhihu</code><br><code>Google, Runoob, Taobao, Zhihu,</code></p>
+<h2 id="Hash题目合集"><a href="#Hash题目合集" class="headerlink" title="Hash题目合集"></a>Hash题目合集</h2>
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2023/10/16/yunsuanfu/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/%E7%AE%97%E6%B3%95/">
+                    算法
+                </a>
+            </div>
+            <h5>
+                <a href="/2023/10/16/yunsuanfu/" class="trm-anima-link">
+                    位运算知识及相关题目
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>23/10/16</li>
+                <li>00:18</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-scroll-animation">
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2023- 2023</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">ZhouZz</span>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v5.4.2
+            </span>
+            <span class="footer-separator" data-separator=" | "></span>
+            <span> 
+                主题 - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                v2.1.3
+            </span>
+        </div>
+      
+
+    
+        <div class="trm-footer-item">
+            博客已萌萌哒运行 <span id="since" class="trm-accent-color"></span> 天
+        </div>
+     
+
+     
+</footer>
+
+<script>
+    function show_date_time () {
+        var BirthDay = new Date("10/9/2023 17:00:00");
+        var today = new Date();
+        var timeold = (today.getTime() - BirthDay.getTime());
+        var msPerDay = 24 * 60 * 60 * 1000
+        var day = Math.floor(timeold / msPerDay)
+        since.innerHTML = day
+    }
+    show_date_time()
+</script>
+ 
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+            
+<div class="trm-fixed-container">
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://npm.elemecdn.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.1.3"></script>
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.1.3"></script>
+
+</body>
+
+</html>
